@@ -120,7 +120,7 @@ class Builder {
 				'with_front' => false,
 				'slug'       => $singular_slug,
 				'walk_dirs'  => false,
-			),,
+			),
 		);
 
 		return array_merge( $defaults, $args );
