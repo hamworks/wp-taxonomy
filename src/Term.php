@@ -49,12 +49,15 @@ class Term {
 	 *
 	 * @param string $name Name.
 	 * @param string $slug Slug.
-	 * @param int    $parent Parent term id.
+	 * @param int $parent Parent term id.
 	 * @param string $description Description.
 	 * @param string $alias_of alias slug.
 	 */
 	public function __construct( $name = '', $slug = '', $parent = 0, $description = '', $alias_of = '' ) {
-		$this->name        = $name;
+		$this->name = $name;
+		if ( empty( $slug ) ) {
+			$slug = $name;
+		}
 		$this->slug        = $slug;
 		$this->parent      = $parent;
 		$this->description = $description;

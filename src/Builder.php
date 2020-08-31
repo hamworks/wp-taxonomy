@@ -45,7 +45,7 @@ class Builder {
 	 *
 	 * @var Term[]
 	 */
-	private $default_terms = array();
+	private $initial_terms = array();
 
 	/**
 	 * Labels.
@@ -74,13 +74,7 @@ class Builder {
 	 */
 	public function create() {
 		$this->register_taxonomy();
-		add_action(
-			'wp_loaded',
-			function () {
-				$this->initialize_taxonomy();
-			},
-			10
-		);
+		$this->initialize_taxonomy();
 		if ( ! empty( $this->args['show_admin_column'] ) ) {
 			new Admin_Dropdown( $this->name, $this->post_type );
 		}
@@ -168,9 +162,9 @@ class Builder {
 	 * Add default terms.
 	 */
 	private function initialize_taxonomy() {
-		if ( ! empty( $this->default_terms ) ) {
-			foreach ( $this->default_terms as $term ) {
-				$this->insert_default_term( $term );
+		if ( ! empty( $this->initial_terms ) ) {
+			foreach ( $this->initial_terms as $term ) {
+				$this->insert_initial_term( $term );
 			}
 		}
 	}
@@ -180,7 +174,7 @@ class Builder {
 	 *
 	 * @param Term $term Term options.
 	 */
-	private function insert_default_term( $term ) {
+	private function insert_initial_term( $term ) {
 		if ( ! term_exists( $term->name, $this->name ) ) {
 			wp_insert_term( $term->name, $this->name, (array) $term );
 		}
@@ -191,8 +185,8 @@ class Builder {
 	 *
 	 * @param Term $term term entity.
 	 */
-	public function set_default_term( Term $term ) {
-		$this->default_terms[ $term->slug ] = $term;
+	public function set_initial_term( Term $term ) {
+		$this->initial_terms[ $term->slug ] = $term;
 	}
 
 }
