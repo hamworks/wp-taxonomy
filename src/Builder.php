@@ -7,6 +7,8 @@
 
 namespace HAMWORKS\WP\Taxonomy;
 
+use Doctrine\Inflector\InflectorFactory;
+
 /**
  * Taxonomy Builder class.
  */
@@ -57,8 +59,8 @@ class Builder {
 	/**
 	 * Constructor.
 	 *
-	 * @param string       $name taxonomy slug.
-	 * @param string       $label taxonomy name.
+	 * @param string $name taxonomy slug.
+	 * @param string $label taxonomy name.
 	 * @param array|string $post_type post type.
 	 */
 	public function __construct( $name, $label, $post_type = array( 'post' ) ) {
@@ -106,10 +108,19 @@ class Builder {
 	 * @return array
 	 */
 	private function create_options( array $args = array() ) {
+		$inflector      = InflectorFactory::create()->build();
+		$singular_slug  = $this->name;
+		$pluralize_slug = $inflector->pluralize( $singular_slug );
+
 		$defaults = array(
 			'show_in_rest'      => true,
+			'rest_base'         => $pluralize_slug,
 			'show_admin_column' => true,
-			'rewrite'           => array( 'with_front' => false ),
+			'rewrite'           => array(
+				'with_front' => false,
+				'slug'       => $singular_slug,
+				'walk_dirs'  => false,
+			),,
 		);
 
 		return array_merge( $defaults, $args );
