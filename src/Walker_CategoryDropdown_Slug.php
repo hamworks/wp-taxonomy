@@ -4,6 +4,7 @@
  *
  * @package HAMWORKS\WP
  */
+
 namespace HAMWORKS\WP\Taxonomy;
 
 /**

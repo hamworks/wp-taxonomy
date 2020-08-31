@@ -69,7 +69,7 @@ class Taxonomy {
 	/**
 	 * Setter options.
 	 *
-	 * @param array $args
+	 * @param array $args options.
 	 */
 	private function set_options( array $args ) {
 		$this->args = $this->create_options( $args );
@@ -87,7 +87,7 @@ class Taxonomy {
 	}
 
 	/**
-	 * label builder.
+	 * Label builder.
 	 *
 	 * @return array
 	 */
@@ -110,7 +110,7 @@ class Taxonomy {
 	/**
 	 * Option builder.
 	 *
-	 * @param array $args
+	 * @param array $args options.
 	 *
 	 * @return array
 	 */
@@ -142,7 +142,7 @@ class Taxonomy {
 	}
 
 	/**
-	 * Insert term if default term not exsist.
+	 * Insert term if default term not exist.
 	 *
 	 * @param array $term Term options.
 	 */
@@ -176,7 +176,7 @@ class Taxonomy {
 	/**
 	 * Create Default Terms
 	 *
-	 * @param array $terms
+	 * @param array $terms term info.
 	 */
 	public function add_default_terms( array $terms ) {
 		foreach ( $terms as $term ) {

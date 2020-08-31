@@ -4,6 +4,7 @@
  *
  * @package HAMWORKS\WP
  */
+
 namespace HAMWORKS\WP\Taxonomy;
 
 /**
@@ -11,10 +12,18 @@ namespace HAMWORKS\WP\Taxonomy;
  */
 class Admin_Dropdown {
 
-	/** @var array */
+	/**
+	 * Post type names.
+	 *
+	 * @var array
+	 */
 	private $post_type;
 
-	/** @var string */
+	/**
+	 * Taxonomy slug.
+	 *
+	 * @var string
+	 */
 	private $taxonomy;
 
 	/**
@@ -38,7 +47,7 @@ class Admin_Dropdown {
 	 */
 	public function add_post_taxonomy_restrict_filter() {
 		global $post_type;
-		if ( in_array( $post_type, $this->post_type ) ) {
+		if ( in_array( $post_type, $this->post_type, true ) ) {
 			$dropdown_options = array(
 				'show_option_all' => __( 'All categories' ),
 				'hide_empty'      => 0,
