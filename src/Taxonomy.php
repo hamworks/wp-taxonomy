@@ -1,43 +1,58 @@
 <?php
+/**
+ * Package for Taxonomy.
+ *
+ * @package HAMWORKS\WP
+ */
 
 namespace HAMWORKS\WP\Taxonomy;
 
 /**
- * Class Taxonomy
- *
- * @package Torounit\WP
+ * Taxonomy Builder class.
  */
 class Taxonomy {
 	/**
-	 * @var array post types.
+	 * Post types.
+	 *
+	 * @var array
 	 */
 	private $post_type = array();
 
 	/**
-	 * @var string taxonomy slug.
+	 * Taxonomy slug.
+	 *
+	 * @var string
 	 */
 	private $taxonomy;
 
 	/**
-	 * @var string name.
+	 * Taxonomy name.
+	 *
+	 * @var string
 	 */
 	private $taxonomy_name;
 
 	/**
-	 * @var array $args arguments.
+	 * Options.
+	 *
+	 * @var array
 	 */
 	private $args;
 
 	/**
-	 * @var array $default_terms default terms.
+	 * Default terms.
+	 *
+	 * @var array{slug: string, name: string, parent: int, description: string, alias_of: string}[]
 	 */
 	private $default_terms = array();
 
 	/**
-	 * @param string $taxonomy
-	 * @param string $taxonomy_name
-	 * @param array|string $post_type
-	 * @param array $args
+	 * Constructor.
+	 *
+	 * @param string       $taxonomy taxonomy slug.
+	 * @param string       $taxonomy_name taxonomy name.
+	 * @param array|string $post_type post type.
+	 * @param array        $args register_taxonomy arguments.
 	 */
 	public function __construct( $taxonomy, $taxonomy_name, $post_type = array( 'post' ), $args = array() ) {
 		$this->taxonomy      = $taxonomy;
@@ -48,20 +63,22 @@ class Taxonomy {
 			$this->post_type = array( $post_type );
 		}
 		$this->set_options( $args );
-		$this->init();
+		$this->register();
 	}
 
 	/**
+	 * Setter options.
+	 *
 	 * @param array $args
 	 */
-	private function set_options( Array $args ) {
+	private function set_options( array $args ) {
 		$this->args = $this->create_options( $args );
 	}
 
 	/**
 	 * Add hooks.
 	 */
-	private function init() {
+	private function register() {
 		$this->register_taxonomy();
 		add_action( 'wp_loaded', array( $this, 'initialize_taxonomy' ), 10 );
 		if ( ! empty( $this->args['show_admin_column'] ) ) {
@@ -70,6 +87,8 @@ class Taxonomy {
 	}
 
 	/**
+	 * label builder.
+	 *
 	 * @return array
 	 */
 	private function create_labels() {
@@ -89,6 +108,8 @@ class Taxonomy {
 	}
 
 	/**
+	 * Option builder.
+	 *
 	 * @param array $args
 	 *
 	 * @return array
@@ -115,12 +136,16 @@ class Taxonomy {
 	 * Add default terms.
 	 */
 	public function initialize_taxonomy() {
-		$self = $this;
 		if ( ! empty( $this->default_terms ) ) {
 			array_walk( $this->default_terms, array( $this, 'set_default_term' ) );
 		}
 	}
 
+	/**
+	 * Insert term if default term not exsist.
+	 *
+	 * @param array $term Term options.
+	 */
 	public function set_default_term( $term ) {
 		if ( ! term_exists( $term['name'], $this->taxonomy ) ) {
 			wp_insert_term( $term['name'], $this->taxonomy, $term );
@@ -130,11 +155,11 @@ class Taxonomy {
 	/**
 	 * Create Default Term
 	 *
-	 * @param string $name
-	 * @param string $slug
-	 * @param array $args
+	 * @param string $name term name.
+	 * @param string $slug term slug.
+	 * @param array  $args term arguments.
 	 */
-	public function add_term( $name, $slug = '', $args = array() ) {
+	public function add_default_term( $name, $slug = '', $args = array() ) {
 		if ( ! $slug ) {
 			$slug = $name;
 		}
@@ -153,12 +178,12 @@ class Taxonomy {
 	 *
 	 * @param array $terms
 	 */
-	public function add_terms( array $terms ) {
+	public function add_default_terms( array $terms ) {
 		foreach ( $terms as $term ) {
 			if ( is_string( $term ) ) {
-				$this->add_term( $term );
+				$this->add_default_term( $term );
 			} else {
-				$this->add_term( $term['name'], $term['slug'], $term['args'] );
+				$this->add_default_term( $term['name'], $term['slug'], $term['args'] );
 			}
 		}
 	}

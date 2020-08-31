@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * Admin filter by Term.
+ *
+ * @package HAMWORKS\WP
+ */
 namespace HAMWORKS\WP\Taxonomy;
 
 /**
- * Class Filter
- *
- * @package Torounit\WP
+ * Class Admin_Dropdown
  */
 class Admin_Dropdown {
 

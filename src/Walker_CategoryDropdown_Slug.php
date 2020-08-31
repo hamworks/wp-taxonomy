@@ -1,22 +1,24 @@
 <?php
-
+/**
+ * Walker class for using slug.
+ *
+ * @package HAMWORKS\WP
+ */
 namespace HAMWORKS\WP\Taxonomy;
 
 /**
  * Class Walker_CategoryDropdown_Slug
- *
- * @package Torounit\WP
  */
 class  Walker_CategoryDropdown_Slug extends \Walker_CategoryDropdown {
 
 	/**
 	 * Start element.
 	 *
-	 * @param string $output output
-	 * @param object $category terms
-	 * @param int $depth depth
-	 * @param array $args arguments
-	 * @param int $id id
+	 * @param string $output output.
+	 * @param object $category terms.
+	 * @param int    $depth depth.
+	 * @param array  $args arguments.
+	 * @param int    $id id.
 	 */
 	public function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
 		$pad = str_repeat( '&nbsp;', $depth * 3 );
