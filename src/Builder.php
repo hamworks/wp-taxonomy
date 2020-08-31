@@ -11,26 +11,27 @@ namespace HAMWORKS\WP\Taxonomy;
  * Taxonomy Builder class.
  */
 class Builder {
-	/**
-	 * Post types.
-	 *
-	 * @var array
-	 */
-	private $post_type;
 
 	/**
 	 * Taxonomy slug.
 	 *
 	 * @var string
 	 */
-	private $taxonomy;
+	private $name;
 
 	/**
 	 * Taxonomy name.
 	 *
 	 * @var string
 	 */
-	private $taxonomy_name;
+	private $label;
+
+	/**
+	 * Post types.
+	 *
+	 * @var array
+	 */
+	private $post_type;
 
 	/**
 	 * Options.
@@ -56,14 +57,14 @@ class Builder {
 	/**
 	 * Constructor.
 	 *
-	 * @param string       $taxonomy taxonomy slug.
-	 * @param string       $taxonomy_name taxonomy name.
+	 * @param string       $name taxonomy slug.
+	 * @param string       $label taxonomy name.
 	 * @param array|string $post_type post type.
 	 */
-	public function __construct( $taxonomy, $taxonomy_name, $post_type = array( 'post' ) ) {
-		$this->taxonomy      = $taxonomy;
-		$this->taxonomy_name = $taxonomy_name;
-		$this->post_type     = (array) $post_type;
+	public function __construct( $name, $label, $post_type = array( 'post' ) ) {
+		$this->name      = $name;
+		$this->label     = $label;
+		$this->post_type = (array) $post_type;
 		$this->set_labels();
 		$this->set_options();
 	}
@@ -81,7 +82,7 @@ class Builder {
 			10
 		);
 		if ( ! empty( $this->args['show_admin_column'] ) ) {
-			new Admin_Dropdown( $this->taxonomy, $this->post_type );
+			new Admin_Dropdown( $this->name, $this->post_type );
 		}
 	}
 
@@ -91,7 +92,7 @@ class Builder {
 	 * @return \WP_Taxonomy|false
 	 */
 	public function get_taxonomy() {
-		return \get_taxonomy( $this->taxonomy );
+		return \get_taxonomy( $this->name );
 	}
 
 	/**
@@ -139,17 +140,17 @@ class Builder {
 	 */
 	private function create_labels( array $args = array() ) {
 		$defaults = array(
-			'name'                => $this->taxonomy_name,
-			'singular_name'       => $this->taxonomy_name,
-			'search_items'        => $this->taxonomy_name . 'を検索',
-			'popular_items'       => 'よく使う' . $this->taxonomy_name,
-			'all_items'           => '全ての' . $this->taxonomy_name,
-			'edit_item'           => $this->taxonomy_name . 'を編集',
-			'update_item'         => $this->taxonomy_name . 'を更新',
-			'add_new_item'        => $this->taxonomy_name . 'を追加',
-			'new_item_name'       => '新しい' . $this->taxonomy_name,
-			'add_or_remove_items' => $this->taxonomy_name . 'を追加もしくは削除',
-			'menu_name'           => $this->taxonomy_name,
+			'name'                => $this->label,
+			'singular_name'       => $this->label,
+			'search_items'        => $this->label . 'を検索',
+			'popular_items'       => 'よく使う' . $this->label,
+			'all_items'           => '全ての' . $this->label,
+			'edit_item'           => $this->label . 'を編集',
+			'update_item'         => $this->label . 'を更新',
+			'add_new_item'        => $this->label . 'を追加',
+			'new_item_name'       => '新しい' . $this->label,
+			'add_or_remove_items' => $this->label . 'を追加もしくは削除',
+			'menu_name'           => $this->label,
 		);
 
 		return array_merge( $defaults, $args );
@@ -160,7 +161,7 @@ class Builder {
 	 */
 	private function register_taxonomy() {
 		$this->args['labels'] = $this->labels;
-		register_taxonomy( $this->taxonomy, $this->post_type, $this->args );
+		register_taxonomy( $this->name, $this->post_type, $this->args );
 	}
 
 	/**
@@ -180,8 +181,8 @@ class Builder {
 	 * @param Term $term Term options.
 	 */
 	private function insert_default_term( $term ) {
-		if ( ! term_exists( $term->name, $this->taxonomy ) ) {
-			wp_insert_term( $term->name, $this->taxonomy, (array) $term );
+		if ( ! term_exists( $term->name, $this->name ) ) {
+			wp_insert_term( $term->name, $this->name, (array) $term );
 		}
 	}
 
