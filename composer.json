@@ -1,9 +1,10 @@
 {
     "name": "hamworks/wp-taxonomy",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Hiroshi Urabe",
-            "email": "mail@torounit.com"
+            "email": "urabe@ham.works"
         }
     ],
     "require": {
