@@ -49,7 +49,7 @@ class Term {
 	 *
 	 * @param string $name Name.
 	 * @param string $slug Slug.
-	 * @param int $parent Parent term id.
+	 * @param int|string $parent Parent term id or slug.
 	 * @param string $description Description.
 	 * @param string $alias_of alias slug.
 	 */

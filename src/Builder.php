@@ -187,7 +187,15 @@ class Builder {
 	 */
 	private function insert_initial_term( $term ) {
 		if ( ! term_exists( $term->name, $this->name ) ) {
-			wp_insert_term( $term->name, $this->name, (array) $term );
+			$args = (array) $term;
+			if ( ! empty( $term->parent ) && is_string( $term->parent ) ) {
+				$term_id = term_exists( $term->parent, $this->name );
+				if ( is_array( $term_id ) ) {
+					$term_id = $term_id['term_id'];
+				}
+				$args['parent'] = absint( $term_id );
+			}
+			wp_insert_term( $term->name, $this->name, $args );
 		}
 	}
 
