@@ -7,6 +7,9 @@
 
 namespace HAMWORKS\WP\Taxonomy;
 
+/**
+ * Term Entity.
+ */
 class Term {
 
 	/**
@@ -47,11 +50,11 @@ class Term {
 	/**
 	 * Term constructor.
 	 *
-	 * @param string $name Name.
-	 * @param string $slug Slug.
+	 * @param string     $name Name.
+	 * @param string     $slug Slug.
 	 * @param int|string $parent Parent term id or slug.
-	 * @param string $description Description.
-	 * @param string $alias_of alias slug.
+	 * @param string     $description Description.
+	 * @param string     $alias_of alias slug.
 	 */
 	public function __construct( $name = '', $slug = '', $parent = 0, $description = '', $alias_of = '' ) {
 		$this->name = $name;

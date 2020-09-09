@@ -59,8 +59,8 @@ class Builder {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $name taxonomy slug.
-	 * @param string $label taxonomy name.
+	 * @param string       $name taxonomy slug.
+	 * @param string       $label taxonomy name.
 	 * @param array|string $post_type post type.
 	 */
 	public function __construct( $name, $label, $post_type = array( 'post' ) ) {
