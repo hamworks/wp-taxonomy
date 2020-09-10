@@ -109,7 +109,7 @@ class Builder {
 	 */
 	private function create_options( array $args = array() ) {
 		$inflector      = InflectorFactory::create()->build();
-		$singular_slug  = $this->name;
+		$singular_slug  = $inflector->urlize( $this->name );
 		$pluralize_slug = $inflector->pluralize( $singular_slug );
 
 		$defaults = array(
