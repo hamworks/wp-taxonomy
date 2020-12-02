@@ -46,10 +46,10 @@ class Admin_Dropdown {
 	 * Add Dropdown.
 	 */
 	public function add_post_taxonomy_restrict_filter() {
-		global $post_type;
-		if ( in_array( $post_type, $this->post_type, true ) ) {
+		$labels = get_taxonomy_labels( get_taxonomy( $this->taxonomy ) );
+		if ( in_array( get_query_var( 'post_type' ), $this->post_type, true ) ) {
 			$dropdown_options = array(
-				'show_option_all' => __( 'All categories' ),
+				'show_option_all' => $labels->all_items,
 				'hide_empty'      => 0,
 				'hierarchical'    => 1,
 				'name'            => $this->taxonomy,
