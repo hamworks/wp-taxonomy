@@ -57,9 +57,9 @@ class Admin_Dropdown {
 				'orderby'         => 'name',
 				'taxonomy'        => $this->taxonomy,
 				'selected'        => get_query_var( $this->taxonomy ),
-				'walker'          => new Walker_CategoryDropdown_Slug(),
+				'value_field'     => 'slug',
 			);
-			echo '<label class="screen-reader-text" for="' . esc_attr( $this->taxonomy ) . '">' . esc_attr( __( 'Filter by category' ) ) . '</label>';
+			echo '<label class="screen-reader-text" for="' . esc_attr( $this->taxonomy ) . '">' . esc_attr( sprintf( __( 'Filter by %s' ), $labels->singular_name ) ) . '</label>';
 			wp_dropdown_categories( $dropdown_options );
 		}
 	}
