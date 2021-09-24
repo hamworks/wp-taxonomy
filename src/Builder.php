@@ -113,10 +113,13 @@ class Builder {
 		$pluralize_slug = $inflector->pluralize( $singular_slug );
 
 		$defaults = array(
-			'show_in_rest'      => true,
-			'rest_base'         => $pluralize_slug,
-			'show_admin_column' => true,
-			'rewrite'           => array(
+			'show_in_rest'        => true,
+			'show_in_graphql'     => true,
+			'graphql_single_name' => $singular_slug,
+			'graphql_plural_name' => $pluralize_slug,
+			'rest_base'           => $pluralize_slug,
+			'show_admin_column'   => true,
+			'rewrite'             => array(
 				'with_front' => false,
 				'slug'       => $singular_slug,
 				'walk_dirs'  => false,
