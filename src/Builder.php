@@ -199,11 +199,14 @@ class Builder {
 				$args['parent'] = absint( $term_id );
 			}
 			$result = wp_insert_term( $term->name, $this->name, $args );
-			if ( $result['term_id'] ) {
-				foreach ( $term->meta as $meta_key => $meta_value ) {
-					add_term_meta( $result['term_id'], $meta_key, $meta_value, true );
+			if ( ! is_wp_error( $result ) ) {
+				if ( $result['term_id'] ) {
+					foreach ( $term->meta as $meta_key => $meta_value ) {
+						add_term_meta( $result['term_id'], $meta_key, $meta_value, true );
+					}
 				}
 			}
+
 		}
 	}
 
