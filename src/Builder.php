@@ -198,7 +198,12 @@ class Builder {
 				}
 				$args['parent'] = absint( $term_id );
 			}
-			wp_insert_term( $term->name, $this->name, $args );
+			$result = wp_insert_term( $term->name, $this->name, $args );
+			if ( $result['term_id'] ) {
+				foreach ( $term->meta as $meta_key => $meta_value ) {
+					add_term_meta( $result['term_id'], $meta_key, $meta_value, true );
+				}
+			}
 		}
 	}
 

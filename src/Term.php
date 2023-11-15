@@ -48,6 +48,13 @@ class Term {
 	public $alias_of;
 
 	/**
+	 * Meta data.
+	 * @var array
+	 */
+
+	public $meta = array();
+
+	/**
 	 * Term constructor.
 	 *
 	 * @param string     $name Name.
@@ -56,7 +63,7 @@ class Term {
 	 * @param string     $description Description.
 	 * @param string     $alias_of alias slug.
 	 */
-	public function __construct( $name = '', $slug = '', $parent = 0, $description = '', $alias_of = '' ) {
+	public function __construct( $name = '', $slug = '', $parent = 0, $description = '', $alias_of = '', $meta = array() ) {
 		$this->name = $name;
 		if ( empty( $slug ) ) {
 			$slug = $name;
@@ -65,5 +72,6 @@ class Term {
 		$this->parent      = $parent;
 		$this->description = $description;
 		$this->alias_of    = $alias_of;
+		$this->meta		   = $meta;
 	}
 }
